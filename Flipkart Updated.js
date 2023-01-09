@@ -7,7 +7,7 @@
                 console.log("value triggered for custom-event", event.event_code);
                 let host = window.location.host || "";
                 console.log(host, "host")
-                window.location.replace("https://staging.yellowmessenger.com/components/flipkart");
+                window.location.replace("https://app.yellow.ai/components/v2/flipkart");
             }
 
         }
