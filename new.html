@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .main {
+            /* display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      position: relative; */
+            /*width: 218px;*/
+        }
+
+        label {
+            font-family: "Arial";
+            font-weight: normal;
+            font-size: 12px;
+            color: #0f3661;
+        }
+
+        #add {
+            font-family: "Arial";
+            font-weight: normal;
+            font-size: 14px;
+            color: #0f3661;
+        }
+
+        #firstname_head,
+        #lastname_head,
+        #email_head,
+        #mobile_head {
+            font-family: "Arial";
+            font-weight: normal;
+            font-size: 13px;
+            color: #0f3661;
+        }
+
+        #head {
+            font-family: "Arial";
+            font-weight: normal;
+            font-size: 12px;
+            color: #0f3661;
+        }
+
+        ::placeholder {
+            color: #DEDEDF;
+        }
+
+        ::-ms-input-placeholder {
+            color: #DEDEDF;
+        }
+
+        ::-moz-input-placeholder {
+            color: #DEDEDF;
+        }
+
+        ::-webkit-input-placeholder {
+            color: #DEDEDF;
+        }
+
+        #firstname,
+        #lastname,
+        #email,
+        #phone {
+            /*font-size: 1rem;*/
+            font-weight: 400;
+            line-height: 1.5;
+            /*height: 36px;*/
+            width: 100%;
+            border: 1px solid #DEDEDF;
+            padding: .375rem .75rem;
+            border-left: 2px solid #ff0000;
+            /*for red color border line*/
+        }
+
+        input[type=submit] {
+            color: #fff;
+            padding: .375rem .75rem;
+            width: 45%;
+            border: 0px;
+            background-color: #00893E;
+            height: 38px;
+
+        }
+
+        input[type=reset] {
+            color: #0f3661;
+            padding: .375rem .75rem;
+            width: 45%;
+            border: 0px;
+            background-color: #fff;
+            height: 38px;
+
+        }
+    </style>
+    <script type="text/javascript">
+        var language_
+        $(document).ready(function () {
+            let params = new URLSearchParams(window.location.search)
+            // console.log(params.get('language'))
+            language_ = params.get('language')
+            // language_ = "ar"
+            if (language_ == 'ar') {
+                document.getElementById('firstname').placeholder = 'الاسم الاول';
+                document.getElementById('lastname').placeholder = 'الكنية';
+                document.getElementById('email').placeholder = 'عنوان البريد الالكتروني';
+                document.getElementById('phone').placeholder = 'رقم الهاتف المحمول';
+                document.getElementById('submit').value = 'إرسال';
+                document.getElementById('reset').value = 'إعادة تعيين';
+
+                document.getElementById('phone').style.textAlign = "right"
+                document.getElementById('firstname').style.textAlign = "right"
+                document.getElementById('email').style.textAlign = "right"
+                document.getElementById('lastname').style.textAlign = "right"
+
+                document.getElementById('head').innerHTML = 'جميع الحقول التي تحمل علامة * إلزامية';
+                document.getElementById('firstname_head').innerHTML = 'الاسم الاول *';
+                document.getElementById('lastname_head').innerHTML = 'الكنية *';
+                document.getElementById('email_head').innerHTML = 'عنوان البريد الالكترونى *';
+                document.getElementById('mobile_head').innerHTML = 'رقم الهاتف المحمول *';
+
+                document.getElementById('head').style.marginLeft = "38px"
+                document.getElementById('firstname_head').style.marginLeft = "135px"
+                document.getElementById('lastname_head').style.marginLeft = "160px"
+                document.getElementById('email_head').style.marginLeft = "85px"
+                document.getElementById('mobile_head').style.marginLeft = "100px"
+
+            }
+            else {
+                document.getElementById('firstname').placeholder = "First Name";
+                document.getElementById('lastname').placeholder = "Last Name";
+                document.getElementById('email').placeholder = "Email Address";
+                document.getElementById('phone').placeholder = "Mobile Number";
+
+                document.getElementById('head').innerHTML = 'All fields marked with * are mandatory';
+                document.getElementById('firstname_head').innerHTML = 'First Name *';
+                document.getElementById('lastname_head').innerHTML = 'Last Name *';
+                document.getElementById('email_head').innerHTML = 'Email Address *';
+                document.getElementById('mobile_head').innerHTML = 'Mobile Number *';
+
+                document.getElementById('head').style.marginLeft = "10px"
+                document.getElementById('firstname_head').style.marginLeft = "10px"
+                document.getElementById('lastname_head').style.marginLeft = "10px"
+                document.getElementById('email_head').style.marginLeft = "10px"
+                document.getElementById('mobile_head').style.marginLeft = "10px"
+            }
+
+        })
+
+        $(function () {
+            $("#submit").click(function () {
+                console.log("--CLICKED ON SUBMIT---")
+                var a, b, c, d;
+                var firstname = $("#firstname").val()
+                if (firstname == "") {
+                    document.getElementById('firstname_error').style.display = 'inline';
+                    if (language_ == 'ar') {
+                        document.getElementById('firstname_error').innerHTML = "الرجاء إدخال الاسم الأول";
+                    }
+                    else {
+                        document.getElementById('firstname_error').innerHTML = "Please enter the first name";
+                    }
+                    return false;
+                } else {
+                    var re = /[0-9!@#\$%\^\&*\)\(+=._-]+$/;
+
+                    var fchk = re.test(firstname);
+                    if (fchk) {
+                        console.log("---em")
+                        document.getElementById('firstname_error').style.display = 'inline';
+                        if (language_ == 'ar') {
+                            document.getElementById('firstname_error').innerHTML = "الرجاء ادخال الأسم الأول";
+                        } else {
+                            document.getElementById('firstname_error').innerHTML = "Please enter a valid first name";
+                        }
+                        return false;
+                    }
+                    //} // this pracet shoud go to after 160 
+
+                    else {
+                        a = 'ok'
+                        document.getElementById('firstname_error').innerHTML = "";
+                        var lastname = $("#lastname").val()
+                        if (lastname == "") {
+                            document.getElementById('lastname_error').style.display = 'inline';
+                            if (language_ == 'ar') {
+                                document.getElementById('lastname_error').innerHTML = "رجاء قم بإدخال الاسم الاخير بشكل صحيح";
+                            } else {
+                                document.getElementById('lastname_error').innerHTML = "Please enter the last name";
+                            }
+                            return false;
+                        } else {
+                            var re = /[0-9!@#\$%\^\&*\)\(+=._-]+$/;
+                            var lchk = re.test(lastname);
+                            if (lchk) {
+                                console.log("---em")
+                                document.getElementById('lastname_error').style.display = 'inline';
+                                if (language_ == 'ar') {
+                                    document.getElementById('lastname_error').innerHTML = "الرجاء ادخال أسم العائلة";
+                                } else {
+                                    document.getElementById('lastname_error').innerHTML = "Please enter a valid last name";
+                                }
+                                return false;
+                            }
+                            //} // this pracet before fcheck 
+
+                            else {
+                                b = 'ok'
+                                document.getElementById('lastname_error').innerHTML = "";
+                                var email = $("#email").val()
+                                if (email == "") {
+                                    document.getElementById('email_error').style.display = 'inline';
+                                    if (language_ == 'ar') {
+                                        document.getElementById('email_error').innerHTML = "الرجاء إدخال عنوان البريد الإلكتروني";
+                                    } else {
+                                        document.getElementById('email_error').innerHTML = "Please enter the email address";
+                                    }
+                                    return false;
+                                } else {
+                                    var re = /[A-Za-z\d]+([-._+]?[A-Za-z\d]+)*@[A-Za-z\d]+(-?[A-Za-z\d])*([.][A-Za-z\d]{2,})+/;
+                                    var x = re.test(email);
+                                    console.log(x)
+                                    if (!x) {
+                                        console.log("---em")
+                                        document.getElementById('email_error').style.display = 'inline';
+                                        if (language_ == 'ar') {
+                                            document.getElementById('email_error').innerHTML = "الرجاء ادخال بريد الكتروني معرف";
+                                        } else {
+                                            document.getElementById('email_error').innerHTML = "Please enter a valid email id";
+                                        }
+                                        return false;
+                                    } else {
+                                        c = 'ok'
+                                        document.getElementById('email_error').innerHTML = "";
+                                        //
+                                        var mobile = $("#phone").val()
+                                        if (mobile == "") {
+                                            document.getElementById('phone_error').style.display = 'inline';
+                                            if (language_ == 'ar') {
+                                                document.getElementById('phone_error').innerHTML = "الرجاء إدخال رقم الهاتف المحمول";
+                                            } else {
+                                                document.getElementById('phone_error').innerHTML = "Please enter the mobile number";
+                                            }
+                                            return false;
+                                        } else {
+                                            //
+                                            // var re = /^(?:050|051|052|055|056|054|058)\d{7}$/;
+                                            var re = /(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g
+                                            var check = re.test(mobile);
+                                            c = 'ok'
+                                            document.getElementById('email_error').innerHTML = "";
+                                            var mobile = $("#phone").val()
+                                            if (mobile != "" && !check) {
+                                                document.getElementById('phone_error').style.display = 'inline';
+                                                if (language_ == 'ar') {
+                                                    document.getElementById('phone_error').innerHTML = "الرجاء إدخال رقم جوال صحيح";
+                                                } else {
+                                                    document.getElementById('phone_error').innerHTML = "Please enter a valid mobile number";
+                                                }
+                                                return false;
+                                            } else {
+                                                d = 'ok'
+                                                document.getElementById('phone_error').innerHTML = "";
+                                                if (a == "ok" && b == "ok" && c == "ok" && d == "ok") {
+                                                    // clearTimeout(x)
+                                                    console.log('First name -', $("#firstname").val())
+                                                    console.log('Last name -', $("#lastname").val())
+                                                    console.log('Email -', $("#email").val())
+                                                    console.log('Phone -', $("#phone").val())
+                                                    let queryback = new URLSearchParams(window.location.search).get('query')
+                                                    console.log("windowww",window)
+                                                    window.parent.postMessage(JSON.stringify({
+                                                        event_code: 'ym-client-event',
+                                                        data: JSON.stringify({
+                                                            event: {
+                                                                code: "userdetails",
+                                                                data: {
+                                                                    firstname: $("#firstname").val(),
+                                                                    lastname: $("#lastname").val(),
+                                                                    email: $("#email").val(),
+                                                                    phone: $("#phone").val()
+                                                                }
+                                                            }
+                                                        })
+                                                    }), '*');
+                                                    $('#custom :input').attr('disabled', 'disabled');
+                                                    $('#custom').fadeTo("slow", 0.15, function () {
+                                                        $(this).find(':input').attr('disabled', 'disabled');
+                                                        $(this).find('label').css('cursor', 'default');
+                                                    });
+                                                    if (language_ == 'ar') {
+                                                        $('#add').append("شكرا لك");
+                                                    } else {
+                                                        $('#add').append("Thank You");
+                                                    }
+                                                } else {
+                                                    console.log("---else--")
+                                                }
+                                            }
+                                        } //
+                                    } // email check contion else
+                                } // 163
+                            } // last name 
+                        }// fname else 136
+                    }
+                }
+            })
+        })
+    </script>
+</head>
+
+<body style="background-color: #f1f1f1;">
+    <div class="main">
+        <div class="container" style="padding: 0;" id="custom">
+            <label id="head"></label>
+            <br><br>
+            <form class="main" style="width: 200px;">
+                <label id="firstname_head"></label>
+                <input type="text" id="firstname" placeholder="" required name="firstname" size="23">
+                <br><label id='firstname_error'></label>
+                <br>
+                <label id="lastname_head"></label>
+                <input type="text" id="lastname" placeholder="" required name="firstname" size="23">
+                <br><label id='lastname_error'></label>
+                <br>
+
+                <label id="email_head"></label>
+                <input type="email" id="email" placeholder="" required name="email" size="23">
+                <br><label id='email_error'></label>
+                <br>
+                <label id="mobile_head"></label>
+                <input type="tel" id="phone" list="programId" placeholder="" required name="phone" size="23">
+                <!-- <datalist id="programId">
+                </datalist> -->
+                <br><label id='phone_error'></label>
+                <br><br>
+                <input type="submit" value="Submit" id="submit"> &nbsp;&nbsp;&nbsp;
+                <input type="reset" value="Reset" id="reset">
+                <br><br>
+                <center><strong><label id="add"></label></strong></center>
+            </form>
+        </div>
+    </div>
+    <!-- below script is commented for 00048344 and 00048526 CR -->
+    <!-- <script>
+        let country = {
+            "countries": [
+                {
+                    "code": "+7 840",
+                    "name": "Abkhazia"
+                },
+                {
+                    "code": "+93",
+                    "name": "Afghanistan"
+                },
+                {
+                    "code": "+355",
+                    "name": "Albania"
+                },
+                {
+                    "code": "+213",
+                    "name": "Algeria"
+                },
+                {
+                    "code": "+1 684",
+                    "name": "American Samoa"
+                },
+                {
+                    "code": "+376",
+                    "name": "Andorra"
+                },
+                {
+                    "code": "+244",
+                    "name": "Angola"
+                },
+                {
+                    "code": "+1 264",
+                    "name": "Anguilla"
+                },
+                {
+                    "code": "+1 268",
+                    "name": "Antigua and Barbuda"
+                },
+                {
+                    "code": "+54",
+                    "name": "Argentina"
+                },
+                {
+                    "code": "+374",
+                    "name": "Armenia"
+                },
+                {
+                    "code": "+297",
+                    "name": "Aruba"
+                },
+                {
+                    "code": "+247",
+                    "name": "Ascension"
+                },
+                {
+                    "code": "+61",
+                    "name": "Australia"
+                },
+                {
+                    "code": "+672",
+                    "name": "Australian External Territories"
+                },
+                {
+                    "code": "+43",
+                    "name": "Austria"
+                },
+                {
+                    "code": "+994",
+                    "name": "Azerbaijan"
+                },
+                {
+                    "code": "+1 242",
+                    "name": "Bahamas"
+                },
+                {
+                    "code": "+973",
+                    "name": "Bahrain"
+                },
+                {
+                    "code": "+880",
+                    "name": "Bangladesh"
+                },
+                {
+                    "code": "+1 246",
+                    "name": "Barbados"
+                },
+                {
+                    "code": "+1 268",
+                    "name": "Barbuda"
+                },
+                {
+                    "code": "+375",
+                    "name": "Belarus"
+                },
+                {
+                    "code": "+32",
+                    "name": "Belgium"
+                },
+                {
+                    "code": "+501",
+                    "name": "Belize"
+                },
+                {
+                    "code": "+229",
+                    "name": "Benin"
+                },
+                {
+                    "code": "+1 441",
+                    "name": "Bermuda"
+                },
+                {
+                    "code": "+975",
+                    "name": "Bhutan"
+                },
+                {
+                    "code": "+591",
+                    "name": "Bolivia"
+                },
+                {
+                    "code": "+387",
+                    "name": "Bosnia and Herzegovina"
+                },
+                {
+                    "code": "+267",
+                    "name": "Botswana"
+                },
+                {
+                    "code": "+55",
+                    "name": "Brazil"
+                },
+                {
+                    "code": "+246",
+                    "name": "British Indian Ocean Territory"
+                },
+                {
+                    "code": "+1 284",
+                    "name": "British Virgin Islands"
+                },
+                {
+                    "code": "+673",
+                    "name": "Brunei"
+                },
+                {
+                    "code": "+359",
+                    "name": "Bulgaria"
+                },
+                {
+                    "code": "+226",
+                    "name": "Burkina Faso"
+                },
+                {
+                    "code": "+257",
+                    "name": "Burundi"
+                },
+                {
+                    "code": "+855",
+                    "name": "Cambodia"
+                },
+                {
+                    "code": "+237",
+                    "name": "Cameroon"
+                },
+                {
+                    "code": "+1",
+                    "name": "Canada"
+                },
+                {
+                    "code": "+238",
+                    "name": "Cape Verde"
+                },
+                {
+                    "code": "+ 345",
+                    "name": "Cayman Islands"
+                },
+                {
+                    "code": "+236",
+                    "name": "Central African Republic"
+                },
+                {
+                    "code": "+235",
+                    "name": "Chad"
+                },
+                {
+                    "code": "+56",
+                    "name": "Chile"
+                },
+                {
+                    "code": "+86",
+                    "name": "China"
+                },
+                {
+                    "code": "+61",
+                    "name": "Christmas Island"
+                },
+                {
+                    "code": "+61",
+                    "name": "Cocos-Keeling Islands"
+                },
+                {
+                    "code": "+57",
+                    "name": "Colombia"
+                },
+                {
+                    "code": "+269",
+                    "name": "Comoros"
+                },
+                {
+                    "code": "+242",
+                    "name": "Congo"
+                },
+                {
+                    "code": "+243",
+                    "name": "Congo, Dem. Rep. of (Zaire)"
+                },
+                {
+                    "code": "+682",
+                    "name": "Cook Islands"
+                },
+                {
+                    "code": "+506",
+                    "name": "Costa Rica"
+                },
+                {
+                    "code": "+385",
+                    "name": "Croatia"
+                },
+                {
+                    "code": "+53",
+                    "name": "Cuba"
+                },
+                {
+                    "code": "+599",
+                    "name": "Curacao"
+                },
+                {
+                    "code": "+537",
+                    "name": "Cyprus"
+                },
+                {
+                    "code": "+420",
+                    "name": "Czech Republic"
+                },
+                {
+                    "code": "+45",
+                    "name": "Denmark"
+                },
+                {
+                    "code": "+246",
+                    "name": "Diego Garcia"
+                },
+                {
+                    "code": "+253",
+                    "name": "Djibouti"
+                },
+                {
+                    "code": "+1 767",
+                    "name": "Dominica"
+                },
+                {
+                    "code": "+1 809",
+                    "name": "Dominican Republic"
+                },
+                {
+                    "code": "+670",
+                    "name": "East Timor"
+                },
+                {
+                    "code": "+56",
+                    "name": "Easter Island"
+                },
+                {
+                    "code": "+593",
+                    "name": "Ecuador"
+                },
+                {
+                    "code": "+20",
+                    "name": "Egypt"
+                },
+                {
+                    "code": "+503",
+                    "name": "El Salvador"
+                },
+                {
+                    "code": "+240",
+                    "name": "Equatorial Guinea"
+                },
+                {
+                    "code": "+291",
+                    "name": "Eritrea"
+                },
+                {
+                    "code": "+372",
+                    "name": "Estonia"
+                },
+                {
+                    "code": "+251",
+                    "name": "Ethiopia"
+                },
+                {
+                    "code": "+500",
+                    "name": "Falkland Islands"
+                },
+                {
+                    "code": "+298",
+                    "name": "Faroe Islands"
+                },
+                {
+                    "code": "+679",
+                    "name": "Fiji"
+                },
+                {
+                    "code": "+358",
+                    "name": "Finland"
+                },
+                {
+                    "code": "+33",
+                    "name": "France"
+                },
+                {
+                    "code": "+596",
+                    "name": "French Antilles"
+                },
+                {
+                    "code": "+594",
+                    "name": "French Guiana"
+                },
+                {
+                    "code": "+689",
+                    "name": "French Polynesia"
+                },
+                {
+                    "code": "+241",
+                    "name": "Gabon"
+                },
+                {
+                    "code": "+220",
+                    "name": "Gambia"
+                },
+                {
+                    "code": "+995",
+                    "name": "Georgia"
+                },
+                {
+                    "code": "+49",
+                    "name": "Germany"
+                },
+                {
+                    "code": "+233",
+                    "name": "Ghana"
+                },
+                {
+                    "code": "+350",
+                    "name": "Gibraltar"
+                },
+                {
+                    "code": "+30",
+                    "name": "Greece"
+                },
+                {
+                    "code": "+299",
+                    "name": "Greenland"
+                },
+                {
+                    "code": "+1 473",
+                    "name": "Grenada"
+                },
+                {
+                    "code": "+590",
+                    "name": "Guadeloupe"
+                },
+                {
+                    "code": "+1 671",
+                    "name": "Guam"
+                },
+                {
+                    "code": "+502",
+                    "name": "Guatemala"
+                },
+                {
+                    "code": "+224",
+                    "name": "Guinea"
+                },
+                {
+                    "code": "+245",
+                    "name": "Guinea-Bissau"
+                },
+                {
+                    "code": "+595",
+                    "name": "Guyana"
+                },
+                {
+                    "code": "+509",
+                    "name": "Haiti"
+                },
+                {
+                    "code": "+504",
+                    "name": "Honduras"
+                },
+                {
+                    "code": "+852",
+                    "name": "Hong Kong SAR China"
+                },
+                {
+                    "code": "+36",
+                    "name": "Hungary"
+                },
+                {
+                    "code": "+354",
+                    "name": "Iceland"
+                },
+                {
+                    "code": "+91",
+                    "name": "India"
+                },
+                {
+                    "code": "+62",
+                    "name": "Indonesia"
+                },
+                {
+                    "code": "+98",
+                    "name": "Iran"
+                },
+                {
+                    "code": "+964",
+                    "name": "Iraq"
+                },
+                {
+                    "code": "+353",
+                    "name": "Ireland"
+                },
+                {
+                    "code": "+972",
+                    "name": "Israel"
+                },
+                {
+                    "code": "+39",
+                    "name": "Italy"
+                },
+                {
+                    "code": "+225",
+                    "name": "Ivory Coast"
+                },
+                {
+                    "code": "+1 876",
+                    "name": "Jamaica"
+                },
+                {
+                    "code": "+81",
+                    "name": "Japan"
+                },
+                {
+                    "code": "+962",
+                    "name": "Jordan"
+                },
+                {
+                    "code": "+7 7",
+                    "name": "Kazakhstan"
+                },
+                {
+                    "code": "+254",
+                    "name": "Kenya"
+                },
+                {
+                    "code": "+686",
+                    "name": "Kiribati"
+                },
+                {
+                    "code": "+965",
+                    "name": "Kuwait"
+                },
+                {
+                    "code": "+996",
+                    "name": "Kyrgyzstan"
+                },
+                {
+                    "code": "+856",
+                    "name": "Laos"
+                },
+                {
+                    "code": "+371",
+                    "name": "Latvia"
+                },
+                {
+                    "code": "+961",
+                    "name": "Lebanon"
+                },
+                {
+                    "code": "+266",
+                    "name": "Lesotho"
+                },
+                {
+                    "code": "+231",
+                    "name": "Liberia"
+                },
+                {
+                    "code": "+218",
+                    "name": "Libya"
+                },
+                {
+                    "code": "+423",
+                    "name": "Liechtenstein"
+                },
+                {
+                    "code": "+370",
+                    "name": "Lithuania"
+                },
+                {
+                    "code": "+352",
+                    "name": "Luxembourg"
+                },
+                {
+                    "code": "+853",
+                    "name": "Macau SAR China"
+                },
+                {
+                    "code": "+389",
+                    "name": "Macedonia"
+                },
+                {
+                    "code": "+261",
+                    "name": "Madagascar"
+                },
+                {
+                    "code": "+265",
+                    "name": "Malawi"
+                },
+                {
+                    "code": "+60",
+                    "name": "Malaysia"
+                },
+                {
+                    "code": "+960",
+                    "name": "Maldives"
+                },
+                {
+                    "code": "+223",
+                    "name": "Mali"
+                },
+                {
+                    "code": "+356",
+                    "name": "Malta"
+                },
+                {
+                    "code": "+692",
+                    "name": "Marshall Islands"
+                },
+                {
+                    "code": "+596",
+                    "name": "Martinique"
+                },
+                {
+                    "code": "+222",
+                    "name": "Mauritania"
+                },
+                {
+                    "code": "+230",
+                    "name": "Mauritius"
+                },
+                {
+                    "code": "+262",
+                    "name": "Mayotte"
+                },
+                {
+                    "code": "+52",
+                    "name": "Mexico"
+                },
+                {
+                    "code": "+691",
+                    "name": "Micronesia"
+                },
+                {
+                    "code": "+1 808",
+                    "name": "Midway Island"
+                },
+                {
+                    "code": "+373",
+                    "name": "Moldova"
+                },
+                {
+                    "code": "+377",
+                    "name": "Monaco"
+                },
+                {
+                    "code": "+976",
+                    "name": "Mongolia"
+                },
+                {
+                    "code": "+382",
+                    "name": "Montenegro"
+                },
+                {
+                    "code": "+1664",
+                    "name": "Montserrat"
+                },
+                {
+                    "code": "+212",
+                    "name": "Morocco"
+                },
+                {
+                    "code": "+95",
+                    "name": "Myanmar"
+                },
+                {
+                    "code": "+264",
+                    "name": "Namibia"
+                },
+                {
+                    "code": "+674",
+                    "name": "Nauru"
+                },
+                {
+                    "code": "+977",
+                    "name": "Nepal"
+                },
+                {
+                    "code": "+31",
+                    "name": "Netherlands"
+                },
+                {
+                    "code": "+599",
+                    "name": "Netherlands Antilles"
+                },
+                {
+                    "code": "+1 869",
+                    "name": "Nevis"
+                },
+                {
+                    "code": "+687",
+                    "name": "New Caledonia"
+                },
+                {
+                    "code": "+64",
+                    "name": "New Zealand"
+                },
+                {
+                    "code": "+505",
+                    "name": "Nicaragua"
+                },
+                {
+                    "code": "+227",
+                    "name": "Niger"
+                },
+                {
+                    "code": "+234",
+                    "name": "Nigeria"
+                },
+                {
+                    "code": "+683",
+                    "name": "Niue"
+                },
+                {
+                    "code": "+672",
+                    "name": "Norfolk Island"
+                },
+                {
+                    "code": "+850",
+                    "name": "North Korea"
+                },
+                {
+                    "code": "+1 670",
+                    "name": "Northern Mariana Islands"
+                },
+                {
+                    "code": "+47",
+                    "name": "Norway"
+                },
+                {
+                    "code": "+968",
+                    "name": "Oman"
+                },
+                {
+                    "code": "+92",
+                    "name": "Pakistan"
+                },
+                {
+                    "code": "+680",
+                    "name": "Palau"
+                },
+                {
+                    "code": "+970",
+                    "name": "Palestinian Territory"
+                },
+                {
+                    "code": "+507",
+                    "name": "Panama"
+                },
+                {
+                    "code": "+675",
+                    "name": "Papua New Guinea"
+                },
+                {
+                    "code": "+595",
+                    "name": "Paraguay"
+                },
+                {
+                    "code": "+51",
+                    "name": "Peru"
+                },
+                {
+                    "code": "+63",
+                    "name": "Philippines"
+                },
+                {
+                    "code": "+48",
+                    "name": "Poland"
+                },
+                {
+                    "code": "+351",
+                    "name": "Portugal"
+                },
+                {
+                    "code": "+1 787",
+                    "name": "Puerto Rico"
+                },
+                {
+                    "code": "+974",
+                    "name": "Qatar"
+                },
+                {
+                    "code": "+262",
+                    "name": "Reunion"
+                },
+                {
+                    "code": "+40",
+                    "name": "Romania"
+                },
+                {
+                    "code": "+7",
+                    "name": "Russia"
+                },
+                {
+                    "code": "+250",
+                    "name": "Rwanda"
+                },
+                {
+                    "code": "+685",
+                    "name": "Samoa"
+                },
+                {
+                    "code": "+378",
+                    "name": "San Marino"
+                },
+                {
+                    "code": "+966",
+                    "name": "Saudi Arabia"
+                },
+                {
+                    "code": "+221",
+                    "name": "Senegal"
+                },
+                {
+                    "code": "+381",
+                    "name": "Serbia"
+                },
+                {
+                    "code": "+248",
+                    "name": "Seychelles"
+                },
+                {
+                    "code": "+232",
+                    "name": "Sierra Leone"
+                },
+                {
+                    "code": "+65",
+                    "name": "Singapore"
+                },
+                {
+                    "code": "+421",
+                    "name": "Slovakia"
+                },
+                {
+                    "code": "+386",
+                    "name": "Slovenia"
+                },
+                {
+                    "code": "+677",
+                    "name": "Solomon Islands"
+                },
+                {
+                    "code": "+27",
+                    "name": "South Africa"
+                },
+                {
+                    "code": "+500",
+                    "name": "South Georgia and the South Sandwich Islands"
+                },
+                {
+                    "code": "+82",
+                    "name": "South Korea"
+                },
+                {
+                    "code": "+34",
+                    "name": "Spain"
+                },
+                {
+                    "code": "+94",
+                    "name": "Sri Lanka"
+                },
+                {
+                    "code": "+249",
+                    "name": "Sudan"
+                },
+                {
+                    "code": "+597",
+                    "name": "Suriname"
+                },
+                {
+                    "code": "+268",
+                    "name": "Swaziland"
+                },
+                {
+                    "code": "+46",
+                    "name": "Sweden"
+                },
+                {
+                    "code": "+41",
+                    "name": "Switzerland"
+                },
+                {
+                    "code": "+963",
+                    "name": "Syria"
+                },
+                {
+                    "code": "+886",
+                    "name": "Taiwan"
+                },
+                {
+                    "code": "+992",
+                    "name": "Tajikistan"
+                },
+                {
+                    "code": "+255",
+                    "name": "Tanzania"
+                },
+                {
+                    "code": "+66",
+                    "name": "Thailand"
+                },
+                {
+                    "code": "+670",
+                    "name": "Timor Leste"
+                },
+                {
+                    "code": "+228",
+                    "name": "Togo"
+                },
+                {
+                    "code": "+690",
+                    "name": "Tokelau"
+                },
+                {
+                    "code": "+676",
+                    "name": "Tonga"
+                },
+                {
+                    "code": "+1 868",
+                    "name": "Trinidad and Tobago"
+                },
+                {
+                    "code": "+216",
+                    "name": "Tunisia"
+                },
+                {
+                    "code": "+90",
+                    "name": "Turkey"
+                },
+                {
+                    "code": "+993",
+                    "name": "Turkmenistan"
+                },
+                {
+                    "code": "+1 649",
+                    "name": "Turks and Caicos Islands"
+                },
+                {
+                    "code": "+688",
+                    "name": "Tuvalu"
+                },
+                {
+                    "code": "+1 340",
+                    "name": "U.S. Virgin Islands"
+                },
+                {
+                    "code": "+256",
+                    "name": "Uganda"
+                },
+                {
+                    "code": "+380",
+                    "name": "Ukraine"
+                },
+                {
+                    "code": "+971",
+                    "name": "United Arab Emirates"
+                },
+                {
+                    "code": "+44",
+                    "name": "United Kingdom"
+                },
+                {
+                    "code": "+1",
+                    "name": "United States"
+                },
+                {
+                    "code": "+598",
+                    "name": "Uruguay"
+                },
+                {
+                    "code": "+998",
+                    "name": "Uzbekistan"
+                },
+                {
+                    "code": "+678",
+                    "name": "Vanuatu"
+                },
+                {
+                    "code": "+58",
+                    "name": "Venezuela"
+                },
+                {
+                    "code": "+84",
+                    "name": "Vietnam"
+                },
+                {
+                    "code": "+1 808",
+                    "name": "Wake Island"
+                },
+                {
+                    "code": "+681",
+                    "name": "Wallis and Futuna"
+                },
+                {
+                    "code": "+967",
+                    "name": "Yemen"
+                },
+                {
+                    "code": "+260",
+                    "name": "Zambia"
+                },
+                {
+                    "code": "+255",
+                    "name": "Zanzibar"
+                },
+                {
+                    "code": "+263",
+                    "name": "Zimbabwe"
+                }
+            ]
+        }
+        // send data suggestion 
+        for (let index = 0; index < country.countries.length; index++) {
+            let code = country.countries[index].code
+            // console.log(code);
+            let counnryName = country.countries[index].name
+            let ele = document.getElementById('programId');
+            ele.innerHTML = ele.innerHTML + '<option value="' + country.countries[index].code + '" >' + country.countries[index].code + "(" + country.countries[index].name + ")" + '</option>';
+        }
+        // console.log(country, "country"); 
+        for (let index = 0; index < country.countries.length; index++) {
+            let code = country.countries[index].code
+            let counnryName = country.countries[index].name
+            let ele = document.getElementById('country');
+            ele.innerHTML = ele.innerHTML + '<option value="' + country.countries[index].code + '" >' + country.countries[index].code + '</option>';
+        }
+
+        function country_code() {
+            let countryCode = document.getElementById("country").value;
+            console.log("country_code", countryCode);
+            document.getElementById("phone").value = countryCode
+        }
+        function phncode() {
+            let phoneno = document.getElementById("phone").value
+            if (phoneno.startsWith("+")) {
+                phoneno = phoneno
+            } else {
+                phoneno = "+" + phoneno
+            }
+            console.log("phone_number", phoneno);
+            var result = country.countries.filter(outcode => outcode.code === phoneno);
+            console.log(result, "country");
+
+            result.forEach(val => {
+                let newres = val.code
+                console.log(val.code);
+                document.getElementById("country").value = newres
+            })
+
+        } 
+    </script> -->
+</body>
+
+</html>
